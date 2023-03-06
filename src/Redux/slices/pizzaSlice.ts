@@ -51,5 +51,6 @@ export const {   } = pizzaSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectPizzaData = (state: RootState) => state.pizzas
+export const selectItems = (state: RootState) => state.pizzas.items;
 
 export default pizzaSlice.reducer
