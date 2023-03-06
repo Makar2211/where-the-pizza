@@ -1,0 +1,61 @@
+.Varieties {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    .item {
+      width: 135px;
+      height: 104px;
+      box-sizing: border-box;
+      background: #ffffff;
+      border: 1px solid #f0f0f0;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      cursor: pointer;
+    }
+  }
+  &-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &-item {
+      display: flex;
+      flex-direction: column;
+      width: 300px;
+      height: 343px;
+      background: #ff7010;
+      border-radius: 12px;
+      justify-content: space-between;
+      &-tenproc {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+        height: 343px;
+        background: #e23535;
+        border-radius: 12px;
+        justify-content: space-between;
+        img {
+          padding-top: 70px;
+        }
+      }
+    }
+    span {
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 28px;
+      /* or 140% */
+
+      display: flex;
+      align-items: center;
+
+      color: #ffffff;
+      padding: 0px 40px 20px 20px;
+    }
+  }
+}
