@@ -1,18 +1,32 @@
 import React from 'react';
 import { Header } from '../components/Header';
 import { Varieties } from '../components/Varieties';
-import { PizzaBlock } from '../components/PizzaBlock/Pizza';
+import { PizzaBlickProps, PizzaBlock } from '../components/PizzaBlock/Pizza';
 import { useSelector } from 'react-redux';
-import { selectItems } from '../Redux/slices/pizzaSlice';
+import { RootState } from '../Redux/store';
+import { fetchPizza } from '../Redux/slices/pizzaSlice';
 
 export const Home: React.FC = () => {
-  const items = useSelector(selectItems);
+  const items = useSelector((state: RootState) => state.pizzas.items);
   console.log(items);
+  const pizzas = items.map((item: PizzaBlickProps) => (
+    <PizzaBlock
+      key={item.id}
+      id={item.id}
+      title={item.title}
+      imageUrl={item.imageUrl}
+      price={item.price}
+      sizes={item.sizes}
+      types={item.types}
+      subtitle={item.subtitle}
+      category={item.category}
+      rating={item.rating}
+    />
+  ));
   return (
     <div className='home-page'>
       <Header />
       <Varieties />
-      <PizzaBlock />
     </div>
   );
 };

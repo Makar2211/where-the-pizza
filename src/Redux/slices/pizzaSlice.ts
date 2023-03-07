@@ -18,33 +18,36 @@ export enum Status {
     SUCCUSS = 'success',
     ERROR = 'error',
   }
+  const initialState: PizzaSliceState = {
+    items: [],
+    status: Status.LOADING
 
+}
   interface PizzaSliceState {
     items: PizzaItems[];
     status: Status;
   }
 
-const initialState: PizzaSliceState = {
-    items: [],
-    status: Status.LOADING
 
-}
-export const fetchProducts = createAsyncThunk<PizzaItems[]>(
-    'pizzas/fetchPizzas',
+
+export const fetchPizza = createAsyncThunk<PizzaItems[]>(
+    "pizza/fetchPizza",
     async () => {
-      const {data} = await axios.get('https://64033600302b5d671c4979aa.mockapi.io/products');
-      return data;
+      try {
+        const {data} = await axios.get("https://64033600302b5d671c4979aa.mockapi.io/products");
+        return data
+      } catch (error) {
+        return console.log(error, "данные не пришли");
+      }
     }
-    
   );
 
 export const pizzaSlice = createSlice({
   name: 'pizzaSlice',
   initialState,
   reducers: {
-    
-    
   },
+  
 })
 
 export const {   } = pizzaSlice.actions
