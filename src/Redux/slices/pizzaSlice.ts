@@ -1,7 +1,18 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../store'
 import axios from 'axios';
 
+export const fetchPizza = createAsyncThunk<PizzaItems[]>(
+  "pizza/fetchPizza",
+  async () => {
+    try {
+      const {data} = await axios.get("https://64033600302b5d671c4979aa.mockapi.io/products");
+      return data
+    } catch (error) {
+      return console.log(error, "данные не пришли");
+    }
+  }
+);
 interface PizzaItems {
     id: string,
     title: string,
@@ -29,31 +40,37 @@ export enum Status {
   }
 
 
-
-export const fetchPizza = createAsyncThunk<PizzaItems[]>(
-    "pizza/fetchPizza",
-    async () => {
-      try {
-        const {data} = await axios.get("https://64033600302b5d671c4979aa.mockapi.io/products");
-        return data
-      } catch (error) {
-        return console.log(error, "данные не пришли");
-      }
-    }
-  );
-
 export const pizzaSlice = createSlice({
   name: 'pizzaSlice',
   initialState,
   reducers: {
+    setItems(state, action: PayloadAction<PizzaItems[]>) {
+      state.items = action.payload;
+    },
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchPizza.pending, (state) => {
+      state.status = Status.LOADING;
+      state.items = [];
+    })
+  
+    builder.addCase(fetchPizza.fulfilled, (state, action) => {
+      state.items = action.payload
+      state.status = Status.SUCCUSS;
+    })
+    builder.addCase(fetchPizza.rejected, (state) => {
+      state.status = Status.ERROR;
+      state.items = [];
+    })
+  }
   
 })
 
-export const {   } = pizzaSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectPizzaData = (state: RootState) => state.pizzas
-export const selectItems = (state: RootState) => state.pizzas.items;
+
+
+export const { setItems } = pizzaSlice.actions;
 
 export default pizzaSlice.reducer

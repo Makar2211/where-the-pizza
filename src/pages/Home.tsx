@@ -4,10 +4,10 @@ import { Varieties } from '../components/Varieties';
 import { PizzaBlickProps, PizzaBlock } from '../components/PizzaBlock/Pizza';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/store';
-import { fetchPizza } from '../Redux/slices/pizzaSlice';
+import { fetchPizza, selectPizzaData } from '../Redux/slices/pizzaSlice';
 
 export const Home: React.FC = () => {
-  const items = useSelector((state: RootState) => state.pizzas.items);
+  const { items } = useSelector(selectPizzaData);
   console.log(items);
   const pizzas = items.map((item: PizzaBlickProps) => (
     <PizzaBlock
