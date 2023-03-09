@@ -2,17 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../store'
 import axios from 'axios';
 
-export const fetchPizza = createAsyncThunk<PizzaItems[]>(
-  "pizza/fetchPizza",
-  async () => {
-    try {
-      const {data} = await axios.get("https://64033600302b5d671c4979aa.mockapi.io/products");
-      return data
-    } catch (error) {
-      return console.log(error, "данные не пришли");
-    }
-  }
-);
+
 interface PizzaItems {
     id: string,
     title: string,
@@ -31,13 +21,22 @@ export enum Status {
   }
   const initialState: PizzaSliceState = {
     items: [],
-    status: Status.LOADING
+    status: Status.LOADING,
 
 }
   interface PizzaSliceState {
     items: PizzaItems[];
     status: Status;
   }
+
+  export const fetchPizza = createAsyncThunk<PizzaItems[]>(
+    "pizza/fetchPizza",
+    async () => {
+        const {data} = await axios.get<PizzaItems[]>("https://64033600302b5d671c4979aa.mockapi.io/products");
+        return data
+      
+    }
+  );
 
 
 export const pizzaSlice = createSlice({
